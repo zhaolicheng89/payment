@@ -1,0 +1,23 @@
+{
+    "name": "zhaolicheng89/payment",
+    "homepage": "https://www.kancloud.cn/langzi/zhifubao-weixin-wxchat-aliyun",
+    "description": "payment so easy",
+    "authors": [
+        {
+            "name": "licheng Zhao"
+        }
+    ],
+    "license": "MIT",
+    "keywords": [
+        "payment"
+    ],
+    "require": {
+        "php": ">=5.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "WxPayPubHelper\\": "./WxPayPubHelper",
+            "Aliyun\\dangmianfu\\": "./Aliyun/dangmianfu"
+        }
+    }
+}

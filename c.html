@@ -1,0 +1,168 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+    <meta charset="UTF-8"> 
+    <title>jquery轮播效果图 </title> 
+    <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script> 
+    <style type="text/css"> 
+      ul li{list-style: none;}
+      .clearfix:after{
+            content: "";clear: both;height: 0px;overflow: hidden;display: block;
+          }
+      .mask{
+         width: 600px;
+            margin: 0px auto;
+          }
+    .list{
+          float: left;
+          width:50px;
+          height: 50px;
+          text-align: center;
+          line-height: 50px;box-sizing: border-box;
+          border: 1px solid gray;
+          margin:2px;
+    }
+    .ul{
+          width: 600px;height: 220px;
+    }
+    .muban{
+          height: 60px;
+          width: 600px;
+          border: 1px solid gray;
+          position: relative;
+    }
+    .bianji{
+          position: absolute;
+          right: 0px;top: 0px;
+    }
+    .hasbox{
+          width: 600px;height: 200px;
+          border: 1px solid black;
+    }
+    .none{
+          display: none;
+    }
+    .mubanbox{
+            width: 600px;
+            margin: 0px auto;
+    }
+    </style> 
+
+
+</head> 
+<body> 
+<div class="mask none">
+        
+
+
+    <div class="box">
+          <ul class="ul clearfix">
+            <li class="list">1</li>
+            <li class="list">2</li>
+            <li class="list">3</li>
+            <li class="list">4</li>
+            <li class="list">5</li>
+            <li class="list">6</li>
+            <li class="list">7</li>
+            <li class="list">8</li>
+            <li class="list">9</li>
+            <li class="list">10</li>
+            <li class="list">11</li>
+            <li class="list">12</li>
+            <li class="list">13</li>
+            <li class="list">14</li>
+            <li class="list">15</li>
+            <li class="list">16</li>
+            <li class="list">17</li>
+            <li class="list">18</li>
+            <li class="list">19</li>
+            <li class="list">20</li>
+            <li class="list">21</li>
+            <li class="list">22</li>
+            <li class="list">23</li>
+            <li class="list">24</li>
+            <li class="list">25</li>
+            <li class="list">26</li>
+            <li class="list">27</li>
+            <li class="list">28</li>
+            <li class="list">29</li>
+            <li class="list">30</li>
+          </ul>
+    </div>
+    <div class="hasbox">
+          <ul class=" hasul clearfix">
+            
+          </ul>
+    </div>
+    <button class="sure" type="">确定</button>
+    <button class="cancel" type="">取消</button>
+</div>
+<div class="mubanbox">
+      <ul class="">
+        <li class="muban"><div class="box-cur"></div><span class="bianji">编辑</span></li>
+        <li class="muban"><div class="box-cur"></div><span class="bianji">编辑</span></li>
+        <li class="muban"><div class="box-cur"></div><span class="bianji">编辑</span></li>
+        <li class="muban"><div class="box-cur"></div><span class="bianji">编辑</span></li>
+        <li class="muban"><div class="box-cur"></div><span class="bianji">编辑</span></li>
+        <li class="muban"><div class="box-cur"></div><span class="bianji">编辑</span></li>
+        <li class="muban"><div class="box-cur"></div><span class="bianji">编辑</span></li>
+
+
+      </ul>
+</div>
+ <script type="text/javascript">
+    var mubanlist ="";//模板里的数据存放的空间
+    var notlist = ""; //未选择存放的空间
+    $('.ul').on('click','li',function() {
+        //点击未选择的按钮
+        $(this).remove();//先移除
+        $('.hasul').append($(this));//再放入到已选择框里
+    });
+    $(".hasul").on('click', "li",function() {
+        // 点击已选择的先移除
+        $(this).remove();
+        //放入到未选择的里面
+        $('.ul').append($(this));
+    });
+    var _this ="";//把点击的编辑按钮定义为一个变量.
+    $('.bianji').on("click",function(){
+        _this = $(this);//使这个变量永远指向点击的编辑按钮
+        mubanlist = _this.siblings('div').children('li');//模板框里的数据
+        notlist = $(".box").find("li");//获取当前未选择框里的数据
+        for(var i = 0;i<mubanlist.length;i++){
+            //遍历模板框的数据把它们放到已选择框里
+            var listtext = $(mubanlist[i]).text();
+            $(".hasul").append('<li class="list">'+listtext+'</li>');
+        }
+        $(".mask").show();//选择框显现
+    })
+    $(".sure").on("click",function(){
+        // 点击确定时
+        var _list = $(".hasbox li");//获取已选择的内容
+        _this.siblings('div').empty();//使已选择框里的数据置空
+        for(var i = 0;i<_list.length;i++){
+            var listtext = $(_list[i]).text();
+            $(_list[i]).remove();//移除已选择框里的每一个元素
+            _this.siblings().append('<li class="list">'+listtext+'</li>')//把已选择的元素添加到要编辑的模板矿里
+        }
+
+
+        $(".mask").hide();//选择框关闭
+        mubanlist ="";//存放模板矿的空间置空防止下次使用冲突
+        notlist = "";//已选择框置空同上
+    })
+    $(".cancel").on("click",function(){
+        $(".box .ul").empty();//点击取消时吧未选择的置空
+        mubanlist = "";//模板框置空同上
+        for(var i = 0;i < notlist.length;i++){
+            var listtext = $(notlist[i]).text();
+            //遍历在点击编辑按钮时获取的原先的为选择框里的数据并把它们放到未选择框里
+            $(".box .ul").append('<li class="list">'+listtext+'</li>');
+        }
+        $(".hasul").empty();//置空已选择框
+        $(".mask").hide();//选择框隐藏
+        notlist = "";//同上
+    })
+</script> 
+</body> 
+</html>
